@@ -1,0 +1,162 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+
+export default function Home() {
+  const [formData, setFormData] = useState({ name: "", email: "", organization: "", message: "" });
+  const [formStatus, setFormStatus] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("/api/quote-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setFormStatus("success");
+        setFormData({ name: "", email: "", organization: "", message: "" });
+      } else {
+        setFormStatus("error");
+      }
+    } catch {
+      setFormStatus("error");
+    }
+  };
+
+  return (
+    <div className="bg-black text-white min-h-screen font-sans scroll-smooth">
+      <header className="flex justify-between items-center p-6 border-b border-gray-800 bg-gradient-to-r from-blue-900 to-purple-900">
+        <div className="text-2xl font-bold">MXA</div>
+        <nav aria-label="Main navigation" className="space-x-6 hidden md:flex">
+          <a href="#products" className="hover:text-gray-300 transition-colors duration-300">Products</a>
+          <a href="#bulk" className="hover:text-gray-300 transition-colors duration-300">Bulk Pricing</a>
+          <a href="#gallery" className="hover:text-gray-300 transition-colors duration-300">Gallery</a>
+          <a href="#contact" className="hover:text-gray-300 transition-colors duration-300">Contact</a>
+        </nav>
+      </header>
+
+      <main>
+        <section className="relative text-center py-24 px-6 bg-black">
+          <img src="/images/hero-background.jpg" alt="Greek merchandise hero background" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-20" />
+          <div className="relative z-10">
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-white drop-shadow-lg tracking-wide">
+              Unmatched Quality. Lower Prices.<br /> Custom Gear That Beats Every Competitor
+            </h1>
+            <div className="space-x-4">
+              <a href="#contact"><Button size="lg" className="transition-colors duration-300">Start Your Order</Button></a>
+              <a href="#contact"><Button variant="outline" size="lg" className="text-white border-white bg-transparent hover:bg-white hover:text-black transition-colors duration-300">Contact Us</Button></a>
+            </div>
+          </div>
+        </section>
+
+        <section id="products" className="py-16 px-6 bg-gradient-to-b from-gray-950 to-black">
+          <h2 className="text-3xl font-bold tracking-wide text-center mb-12">Top-Selling Greek Gear</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
+            {["Shirts", "Hoodies", "Pants", "Belts", "Hats"].map((item, idx) => (
+              <Card key={idx} className="bg-gray-900 text-white hover:scale-105 transition-transform duration-300">
+                <CardContent className="p-0">
+                  <img src={`/images/product${idx + 1}.jpg`} alt={item} loading="lazy" className="w-full h-40 object-cover rounded-t" />
+                  <div className="p-4 text-center text-lg font-medium">{item}</div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section id="why" className="py-16 px-6 text-center bg-black">
+          <h2 className="text-3xl font-bold tracking-wide mb-8">Why MXA</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { title: "Fast Turnaround", icon: "/images/speed.png" },
+              { title: "Premium Quality", icon: "/images/quality.png" },
+              { title: "Wholesale Pricing", icon: "/images/pricing.png" }
+            ].map((feature, idx) => (
+              <Card key={idx} className="bg-gray-900 text-white hover:shadow-xl transition-shadow">
+                <CardContent className="p-6 flex flex-col items-center">
+                  <img src={feature.icon} alt={feature.title} loading="lazy" className="w-12 h-12 mb-4" />
+                  <div className="text-xl font-semibold">{feature.title}</div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section id="bulk" className="py-16 px-6 bg-gradient-to-r from-black to-gray-950 text-white text-center">
+          <h2 className="text-3xl font-bold tracking-wide mb-6">Bulk Pricing & Production Timeline</h2>
+          <p className="max-w-2xl mx-auto mb-6 text-lg">The more you order, the better your pricing. We offer flexible solutions for all chapter sizes.</p>
+          <p className="max-w-2xl mx-auto mb-6 text-lg">Some orders may need to be placed months in advance—especially for custom embroidery, premium gear, or large quantities. Others can be completed in just 1–2 weeks depending on complexity.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+            <img src="/images/manufacturing1.jpg" alt="Shirt production" loading="lazy" className="w-full h-64 object-cover rounded-lg shadow-lg" />
+            <img src="/images/warehouse1.jpg" alt="Warehouse" loading="lazy" className="w-full h-64 object-cover rounded-lg shadow-lg" />
+          </div>
+        </section>
+
+        <section id="gallery" className="py-16 px-6 bg-gray-950 text-center">
+          <h2 className="text-3xl font-bold tracking-wide mb-12">Gallery: Our Past Work</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {["gallery1.jpg", "gallery2.jpg", "gallery3.jpg", "gallery4.jpg", "gallery5.jpg", "gallery6.jpg"].map((img, idx) => (
+              <Card key={idx} className="bg-gray-900 hover:scale-105 transition-transform">
+                <CardContent className="p-0">
+                  <img src={`/uploads/${img}`} alt={`Past Order ${idx + 1}`} loading="lazy" className="w-full h-48 object-cover rounded" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="py-16 px-6 bg-gradient-to-r from-purple-900 to-black text-center">
+          <h2 className="text-2xl font-bold tracking-wide mb-8">What Greek Leaders Say</h2>
+          <div className="max-w-4xl mx-auto text-gray-300">
+            <p className="italic">“MXA gave us the best deal for our rush shirts—faster, cheaper, and better than anyone else.”</p>
+            <p className="mt-4">— Head of Merchandise, Sigma Nu at SMU</p>
+          </div>
+        </section>
+
+        <section id="contact" className="py-16 px-6 bg-black text-center">
+          <h2 className="text-3xl font-bold tracking-wide mb-8">Request a Quote</h2>
+          <form onSubmit={handleSubmit} className="max-w-xl mx-auto space-y-4 text-left">
+            <Input name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
+            <Input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+            <Input name="organization" placeholder="Organization Name" value={formData.organization} onChange={handleChange} />
+            <Textarea name="message" placeholder="Tell us what you're looking for: quantity, items, design idea, deadline…" rows={5} value={formData.message} onChange={handleChange} />
+            <Button type="submit" className="w-full transition-colors duration-300">Submit Request</Button>
+            {formStatus === "success" && <p className="text-green-500">Request sent successfully!</p>}
+            {formStatus === "error" && <p className="text-red-500">There was an error. Please try again.</p>}
+          </form>
+        </section>
+      </main>
+
+      <footer className="bg-gray-950 text-gray-400 px-6 py-12">
+        <div className="grid md:grid-cols-3 gap-6">
+          <div>
+            <h3 className="font-semibold mb-2">Stay Updated</h3>
+            <Input placeholder="Your email" className="mb-2" />
+            <Button className="transition-colors duration-300">Subscribe</Button>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-2">Follow Us</h3>
+            <div className="space-x-4">
+              <a href="#" className="hover:text-white transition-colors duration-300">Instagram</a>
+              <a href="#" className="hover:text-white transition-colors duration-300">TikTok</a>
+              <a href="#" className="hover:text-white transition-colors duration-300">LinkedIn</a>
+            </div>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-2">B2B Portal</h3>
+            <a href="#" className="underline hover:text-white transition-colors duration-300">Login to Dashboard</a>
+          </div>
+        </div>
+        <p className="text-center mt-12 text-sm">© 2025 MXA. All rights reserved.</p>
+      </footer>
+    </div>
+  );
+}
