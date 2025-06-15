@@ -1,0 +1,133 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: black;
+  color: white;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #000;
+}
+header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ccc;
+}
+header nav a {
+  margin-left: 1rem;
+  color: white;
+  text-decoration: none;
+}
+header nav a:hover {
+  color: #ccc;
+}
+.carousel {
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+}
+.carousel .slides img {
+  position: absolute;
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.carousel .slides img.active {
+  opacity: 1;
+}
+.carousel-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  text-align: center;
+}
+.carousel-overlay h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.btn {
+  padding: 0.5rem 1rem;
+  background: #ccc;
+  color: black;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+.btn.outline {
+  background: transparent;
+  border: 1px solid #ccc;
+  color: #ccc;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 1rem 2rem;
+}
+.card {
+  background: #1e293b;
+  overflow: hidden;
+}
+.card img {
+  width: 100%;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.card:hover img {
+  transform: scale(1.05);
+}
+.card .label {
+  padding: 0.5rem;
+  text-align: center;
+  background: #111;
+  color: #ccc;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+input, textarea {
+  padding: 0.5rem;
+}
+button {
+  padding: 0.5rem;
+  background: #ccc;
+  color: black;
+  border: none;
+  cursor: pointer;
+}
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #111;
+}
+
+#how-we-work {
+  padding: 2rem;
+  background: #0f0f0f;
+  text-align: center;
+}
+#how-we-work h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #ccc;
+}
+#how-we-work .desc {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #bbb;
+}
